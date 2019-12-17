@@ -1,0 +1,84 @@
+@extends('admin.layout.app')
+
+@section('content')
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>{{ $title ?? '-' }}</h1>
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_profile')])
+        </div>
+
+        <div class="section-body">
+            @include('admin.inc.messages')
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('admin.profile.update') }}" method="post">
+                                @csrf
+                                @method('POST')
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" name="name" class="form-control" id=""
+                                            value="{{ $admin->name }}">
+                                        @if ($errors->has('name'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" name="email" class="form-control" id=""
+                                            value="{{ $admin->email }}">
+                                        @if ($errors->has('email'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="old_password">Old Password</label>
+                                        <input type="password" name="old_password" class="form-control" id="" value="">
+                                        @if ($errors->has('old_password'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('old_password') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" class="form-control" id="" value="">
+                                        <div class="text-muted">Password should be minimum 8 characters long.</div>
+                                        @if ($errors->has('password'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password_confirmation">Confirm Password</label>
+                                        <input type="password" name="password_confirmation" class="form-control" id=""
+                                            value="">
+                                        @if ($errors->has('password_confirmation'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                        Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@endsection

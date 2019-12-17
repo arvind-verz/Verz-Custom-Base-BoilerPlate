@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Http\Controllers\CMS;
+
+use App\Http\Controllers\Controller;
+use App\Menu;
+use App\Traits\SystemSettingTrait;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class MenuController extends Controller
+{
+    use SystemSettingTrait;
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+        $this->title = __('constant.MENU');
+        $this->module = 'MENU';
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+            return $next($request);
+        });
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $title = $this->title;
+        $menu = Menu::orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+
+        return view('admin.cms.menu.index', compact('title', 'menu'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $title = $this->title;
+
+        return view('admin.cms.menu.create', compact('title'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'  =>  'required|unique:menus,title',
+            'view_order'    =>  'required|numeric',
+            'status'   =>  'required',
+        ]);
+
+        $menu = new Menu;
+        $menu->title = $request->title;
+        $menu->view_order = $request->view_order;
+        $menu->status = $request->status;
+        $menu->save();
+
+        return redirect()->route('menu.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $title = $this->title;
+        $menu = Menu::findorfail($id);
+
+        return view('admin.cms.menu.show', compact('title', 'menu'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $title = $this->title;
+        $menu = Menu::findorfail($id);
+
+        return view('admin.cms.menu.edit', compact('title', 'menu'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title'  =>  'required|unique:menus,title,'.$id.',id',
+            'view_order'    =>  'required|numeric',
+            'status'   =>  'required',
+        ]);
+
+        $menu = Menu::findorfail($id);
+        $menu->title = $request->title;
+        $menu->view_order = $request->view_order;
+        $menu->status = $request->status;
+        $menu->updated_at = Carbon::now();
+        $menu->save();
+
+        return redirect()->route('menu.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        $id = explode(',', $request->multiple_delete);
+        Menu::destroy($id);
+
+        return redirect(url(url()->previous()))->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
+    }
+
+    public function search(Request $request)
+    {
+        $title = $this->title;
+        $secondary_title = "Search";
+        $search = $request->search;
+        $menu = Menu::search($search)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+
+        return view('admin.cms.menu.index', compact('title', 'secondary_title', 'menu'));
+    }
+}
