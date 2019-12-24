@@ -2,6 +2,22 @@
 
 All notable changes to `laravel-medialibrary` will be documented in this file
 
+## 7.17.1 - 2019-12-15
+
+- fix custom disk url giving invalid urls (#1653)
+
+## 7.17.0 - 2019-12-15
+
+- added diskName on copy and move methods in media model (#1666)
+
+## 7.16.2 - 2019-12-15
+
+- correctly use the media item's disk when removing responsive images (#1668)
+
+## 7.16.1 - 2019-12-11
+
+- escape responsive URL - Fix issue #1659 (#1661)
+
 ## 7.16.0 - 2019-12-02
 
 - add ability to upload files from a non-local disk

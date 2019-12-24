@@ -17,7 +17,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'LSS') }}</title>
+    <title>{{ config('system_settings.admin_app_name') }}</title>
 
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>

@@ -1,6 +1,13 @@
 <?php
 
+use App\PermissionAccess;
 use Yadahan\AuthenticationLog\AuthenticationLog;
+use App\Page;
+use App\Slider;
+use App\Banner;
+use App\Menu;
+use App\MenuList;
+use App\Role;
 
 if (!function_exists('getPageList')) {
 
@@ -10,6 +17,12 @@ if (!function_exists('getPageList')) {
      * @param
      * @return
      */
+
+    function guid()
+    {
+        return uniqid();
+    }
+
     function getPageList($array, $parent_id = 0, $indent = 0)
     {
         $data = '';
@@ -105,4 +118,147 @@ if (!function_exists('getPageList')) {
             }
         }
     }
+
+    function getModules($module = null)
+    {
+        $array_list = ['ACTIVITYLOG', 'MENU', 'MENU_LIST', 'PAGES', 'EMAIL_TEMPLATE', 'SYSTEM_SETTING', 'ROLES_AND_PERMISSION', 'BANNER', 'SLIDER', 'USER_ACCOUNT'];
+        return $array_list;
+    }
+
+    function getPosition($id = null)
+    {
+        // $array_list = ['1'  =>  'Top', '2'  =>  'Right',    '3' =>  'Bottom', '4'   =>  'Left'];
+        $array_list = ['1'  =>  'Top'];
+        if($id)
+        {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
+    function get_permission_access_value($type, $module, $value, $role_id = null)
+    {
+        $permission_access = PermissionAccess::where(['role_id' => $role_id, $type => $value, 'module' => $module])->get();
+        if ($permission_access->count()) {
+            return 'checked';
+        }
+    }
+
+    function is_permission_allowed($admin_id, $role_id, $module, $type)
+    {
+        if($admin_id==1)
+        {
+            return false;
+        }
+        $query = PermissionAccess::join('admins', 'permission_accesses.role_id', '=', 'admins.admin_role');
+        if($role_id)
+        {
+            $query->where('admins.id', $admin_id);
+            $query->where('permission_accesses.role_id', $role_id);
+            $query->where('permission_accesses.'.$type, 1);
+            $query->where('permission_accesses.module', $module);
+        }
+        $permission_access = $query->get();
+        if (!$permission_access->count()) {
+            abort(redirect()->route('access-not-allowed'));
+        }
+    }
+
+    function getRoleName($role_id)
+    {
+        $result = Role::find($role_id);
+        if($result)
+        {
+            return $result->name;
+        }
+        return '-';
+    }
+
+    function getMenuName($menu)
+    {
+        $result = Menu::find($menu);
+        if($result)
+        {
+            return $result->title;
+        }
+    }
+
+	function get_parent_menu($position = NULL,$page_id)
+    {
+        $string = [];
+        $menus = MenuList::where('menu_lists.menu_id', $position)
+			->where('menu_lists.status', 1)
+            ->select('menu_lists.*')
+            ->orderBy('view_order', 'asc')
+            ->get();
+
+        if ($menus->count() > 0) {
+            //$string[] = '<ul>';
+            foreach ($menus as $menu) {
+                $link = create_menu_link($menu);
+                if ($menu->page_id == NULL)
+                    $target = 'target="_blank"';
+                else
+                    $target = "";
+
+
+                if ($page_id == $menu->page_id)
+                    $sel = 'class="active"';
+                else
+                    $sel = '';
+
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+
+
+                $string[] = '</li>';
+
+
+            }
+            //$string[] = '</ul>';
+        }
+
+        return join("", $string);
+    }
+
+
+	function create_menu_link($item = [])
+    {
+
+        if ($item['page_id'] == NULL) {
+            return $item->external_link;
+        } else {
+            $page = Page::where('id', $item['page_id'])->select('pages.slug')->first();
+            return url($page['slug']);
+        }
+    }
+
+	function get_page_by_slug($slug=NULL)
+	{
+	  $page = Page::where('slug', $slug)->where('status', 1)->first();
+	  if($page)
+	  return $page;
+	  else
+	  return "";
+	}
+
+
+	function get_sliders()
+	{
+	  $slider = Slider::where('page_id', 1)->where('status', 1)->first();
+	  if($slider)
+	  return $slider;
+	  else
+	  return "";
+	}
+
+	function get_banner_by_page($page_id)
+	{
+	  $banner = Banner::where('page_id', $page_id)->where('status', 1)->inRandomOrder()->first();
+	  if($banner)
+	  return $banner;
+	  else
+	  return "";
+	}
+
+
 }

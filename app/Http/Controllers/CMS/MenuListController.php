@@ -20,6 +20,8 @@ class MenuListController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.MENU_LIST');
         $this->module = 'MENU_LIST';
+        $this->middleware('grant.permission:'.$this->module);
+        $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);
@@ -35,7 +37,7 @@ class MenuListController extends Controller
         $menu_title = Menu::findorfail($menu);
         $title = $this->title;
         $pages = Page::where('parent', 0)->get();
-        $menu_list = MenuList::where('menu_id', $menu)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $menu_list = MenuList::where('menu_id', $menu)->orderBy('view_order', 'asc')->paginate($this->pagination);
 
         return view('admin.cms.menu.menu_list.index', compact('title', 'menu_list', 'menu', 'pages'));
     }
@@ -159,7 +161,7 @@ class MenuListController extends Controller
         $menu_title = Menu::findorfail($menu);
         $title = $this->title;
         $pages = Page::where('parent', 0)->get();
-        $menu_list = MenuList::join('pages', 'pages.id', '=', 'menu_lists.page_id')->select('menu_lists.title as menu_list_title', 'menu_lists.view_order as menu_list_view_order', 'menu_lists.created_at as menu_list_created_at', 'menu_lists.updated_at as menu_list_updated_at', 'pages.*', 'menu_lists.*')->where('menu_id', $menu)->search($search)->orderBy('menu_lists.view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $menu_list = MenuList::join('pages', 'pages.id', '=', 'menu_lists.page_id')->select('menu_lists.title as menu_list_title', 'menu_lists.view_order as menu_list_view_order', 'menu_lists.created_at as menu_list_created_at', 'menu_lists.updated_at as menu_list_updated_at', 'pages.*', 'menu_lists.*')->where('menu_id', $menu)->search($search)->orderBy('menu_lists.view_order', 'asc')->paginate($this->pagination);
 
         return view('admin.cms.menu.menu_list.index', compact('title', 'menu_list', 'menu', 'pages'));
     }

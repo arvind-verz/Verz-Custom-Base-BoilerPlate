@@ -1,0 +1,436 @@
+/*@import "bourbon";*/
+
+/* colors */
+$red: #FF4A53;
+$dark: #333;
+
+$accent: $orange;
+$accent-inactive: #4E4E4E;
+$secondary: $accent-inactive;
+
+
+/* tab setting */
+$tab-count: 3;
+$indicator-width: 100px;
+$indicator-height: 4px;
+
+/* breakpoints */
+$breakpoints: (
+  medium: #{$tab-count*250px},
+  small: #{$tab-count*150px}
+);
+
+
+/* selectors relative to radio inputs */
+$label-selector: "~ ul > li";
+$slider-selector: "~ .slider";
+$content-selector: "~ .content > section";
+
+@mixin tabs(
+  $label-selector: $label-selector,
+  $slider-selector: $slider-selector,
+  $content-selector: $content-selector) {
+    
+  @for $i from 1 through $tab-count {
+    &:nth-of-type(#{$i}):checked {
+      #{$label-selector}:nth-child(#{$i}) {
+        @content;
+      }
+
+      #{$slider-selector} {
+        transform: translateX(#{100% * ($i - 1)});
+      }
+
+      /*#{$content-selector}:nth-child(#{$i}) {
+        display: block;
+      }*/
+    }
+  }
+}
+
+.tabs {
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  min-width: #{$tab-count * 60px};
+  input[name="tab-control"] {
+    display: none;
+  }
+	.nav-tabs-wrap { position: relative; }
+  ul li label {
+    font-size: 18px;
+    color: $accent;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+	position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+	  &:before { border-bottom: #D1D1D1 solid 3px; bottom: -3px; content: ""; left: 0; position: absolute; right: 0;}
+    li {
+      box-sizing: border-box;
+      flex: 1;
+      width: #{100%/$tab-count};
+      padding: 0 10px;
+      text-align: center;
+      
+      label {
+        transition: all 0.3s ease-in-out;
+        color: $secondary;
+        padding-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        white-space: nowrap;
+        -webkit-touch-callout: none;
+        /*@include user-select(none);*/
+		  -webkit-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+        br {
+          display: none;
+        }
+        
+        &:hover,
+        &:focus,
+        &:active {
+          outline: 0;
+			color: $orange;
+          svg {
+            fill: lighten($secondary, 15%);
+          }
+        }
+      }
+    }
+  }
+  
+  .slider {
+    position: relative;
+    width: #{100%/$tab-count};
+    transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+    .indicator {
+      position: relative;
+      width: $indicator-width;
+      max-width: 100%;
+      margin: 0 auto;
+      height: $indicator-height;
+      background: $accent;
+      border-radius: 0; 
+		@media (max-width:640px){
+			width: 50px;
+		}
+    }
+
+  }
+  
+  .content { 
+    section {
+		height: 0;
+		overflow: hidden;
+        animation: {
+        name: content;
+        direction: normal;
+        duration: 0.3s;
+        timing-function: ease-in-out;
+        iteration-count: 1;
+      }
+      line-height: 1.4;
+		&.active {height: auto;}
+		.inner {
+			padding-top: 50px;
+			&.bg-1 { padding-bottom: 50px; }
+		}
+		.about {
+			&-1 { margin: 0 auto; max-width: 900px; 
+				h3 { font-size: 19px; font-weight: normal; margin: 0 0 20px; text-align: center; }
+				@media (max-width:767px){
+					text-align: center; 
+				}				
+			}
+			&-2 { margin-top: 50px;
+				h3 { font-size: 30px; font-weight: normal; margin: 50px 0 20px;
+					&:first-child { margin-top: 0; }
+				}
+				.descript { 
+					.content { padding: 100px 0 100px 30px; }
+				}
+				@media (max-width:767px){
+					.bg { background: none !important;
+						.bgimg { display: block !important; width: 100%; }
+					}
+					.descript { padding-right: 15px !important;
+						.content { max-width: 540px; margin: 0 auto; padding: 50px 15px; text-align: center; }
+					}
+				}				
+			}
+			&-3 { background: url("../images/tempt/img-about-2.jpg") no-repeat center top; background-size: cover; padding: 100px 0;
+				h2 { font-size: 30px; font-weight: normal; margin: 0 0 10px;			
+					@media (max-width:640px){
+						font-size: 24px;
+					}
+				}
+				h3 { color: #C6976A; font-size: 80px; font-weight: normal; line-height: 1; margin: 0 0 10px; 					
+					@media (max-width:1199px){
+						font-size: 50px;
+					}				
+					@media (max-width:640px){
+						font-size: 40px;
+					}
+				}
+				.content { max-width: 50%;
+					@media (max-width:767px){
+						background: rgba(255,255,255,0.8); border-radius: 10px; max-width: none; padding: 20px;
+					}
+					
+				}
+			}
+			&-4 { border-bottom: #D1D1D1 solid 1px; padding-bottom: 50px; padding-top: 50px; 		
+				@media (max-width:991px){
+					padding-bottom: 0; padding-top: 0;
+				}
+			}
+			&-5 { max-width: 900px; text-align: center;
+				h2 { font-size: 20px; font-weight: normal; margin: 0 0 20px; text-transform: uppercase; }			
+			}
+			&-6 {
+				h3 { font-size: 30px; font-weight: normal; margin: 0; text-transform: lowercase; }	
+				.approach-wrap { overflow: hidden;	
+					.logo { left: 50%; margin-left: -117px; margin-top: -37px; position: absolute; top: 50%; width: 234px;}
+					.pin-wrap { height: 28px; position: absolute; width: 28px;
+						.pin-1 { height: 100%; left: 100%; top: 10%; width: 100%;
+							.circle{
+								&:nth-child(1){background-color: rgba(33, 131, 246,0.22);}
+								&:nth-child(2){background-color: #2183F6;}
+							}													
+							@media (max-width:767px){
+								left: 30px;		
+							}								
+						}	
+					}
+					.approach { font-size: 20px; height: 820px; margin: -50px auto -80px; position: relative; width: 820px; z-index: 2;
+						svg { height: 54%; left: 50%; margin-left: -27%; margin-top: -27%; position: absolute; top: 50%; width: 54%; z-index: -1; 		
+						}
+						.app { position: absolute; text-align: center;
+							&:before { font-family: 'Font Awesome 5 Free'; font-weight: 900; font-size: 18px; position: absolute; opacity: 0; @include transition; 						
+								@media (max-width:767px){
+									font-size: 12px; 
+								}		
+							}
+							&-1 { bottom: 75%; left: 50%; margin-left: -10%; padding-bottom: 70px; width: 20%;
+								&:before { bottom: 35px; content: "\f107"; left: 50%; margin-left: -7px;							
+									@media (max-width:767px){
+										bottom: 20px; margin-left: -3px;	
+									}		
+								}
+								.pin-wrap { bottom: 0; left: 50%; margin-left: -14px;													
+									@media (max-width:767px){
+										margin-left: -9px;		
+									}	
+								}												
+								@media (max-width:767px){
+									bottom: 65%; padding-bottom: 40px;
+								}														
+								@media (max-width:480px){
+									bottom: 64.3%;
+								}							
+								@media (max-width:425px){
+									bottom: 64%;
+								}	
+							}
+							&-2, &-3, &-4 { padding-left: 50px; right: 0; 
+								&:before { content: "\f104"; left: 39px; top: 2px;									
+									@media (max-width:767px){
+										left: 22px; top: 1px;
+									}		
+								}
+								.pin-wrap { left: 0; top: 0; }									
+								@media (max-width:767px){
+									padding-left: 35px; 
+								}		
+							}
+							&-2 { padding-right: 8%; top: 30%; width: 32%;																		
+								@media (max-width:991px){
+									width: 31%;	
+								}												
+								@media (max-width:767px){
+									top: 37%; width: 39%;	
+								}						
+								@media (max-width:375px){
+									top: 35%; width: 41%;	
+								}		
+							}
+							&-3 { top: 48%; width: 24.6%; 											
+								@media (max-width:767px){
+									top: 48%; width: 34.6%;
+								}												
+								@media (max-width:480px){
+									width: 35.2%;
+								}				
+								@media (max-width:425px){
+									width: 35.6%;	
+								}				
+								@media (max-width:375px){
+									width: 36%;	
+								}		
+							}
+							&-4 { top: 68%; width: 33%;											
+								@media (max-width:767px){
+									top: 62%; width: 41%;
+								}												
+								@media (max-width:480px){
+									width: 43%;
+								}									
+								@media (max-width:425px){
+									width: 44%;
+								}		
+							}
+							&-5, &-6, &-7 { left: 0; padding-right: 50px; 
+								&:before { content: "\f105"; right: 39px; top: 2px; 								
+									@media (max-width:767px){
+										right: 22px; top: 1px;
+									}		
+								}
+								.pin-wrap { right: 0; top: 3px; }								
+								@media (max-width:767px){
+									padding-right: 35px; 
+								}								
+							}
+							&-5 { padding-left: 8%; top: 68%; width: 34%; 										
+								@media (max-width:767px){
+									top: 62%; width: 42%;
+								}													
+								@media (max-width:480px){
+									width: 44%;
+								}						
+								@media (max-width:425px){
+									padding-top: 5px; width: 44%;	
+								}												
+								@media (max-width:375px){
+									width: 46%; 
+								}	
+							}
+							&-6 { top: 48%; width: 25.1%; 										
+								@media (max-width:767px){
+									top: 48%; width: 34.8%;
+								}			
+								@media (max-width:425px){
+									width: 35.8%;	
+								}				
+								@media (max-width:375px){
+									width: 36%;	
+								}		
+							}
+							&-7 { top: 30%; width: 32.1%;						
+								@media (max-width:991px){
+									width: 31.1%;	
+								}								
+								@media (max-width:767px){
+									top: 37%; width: 39%;	
+								}						
+								@media (max-width:375px){
+									top: 33%; width: 41.5%;	
+								}	
+							}
+							&:hover { color: #F68121;
+								.pin-1 .circle{
+									&:nth-child(1){background-color: rgba(246, 129, 33,0.5);}
+									&:nth-child(2){background-color: #F68121;}
+								}	
+								&:before { opacity: 1; }
+							}
+							a { bottom: 0; font-size: 0; left: 0; position: absolute; right: 0; top: 0; }
+						}									
+						@media (max-width:991px){ 
+							font-size: 15px; height: 650px; margin: -50px auto -80px; width: 650px;
+							svg { height: 55%; margin-left: -27.5%; margin-top: -27.5%; width: 55%; }	
+							.logo {	margin-left: -95px; margin-top: -30px; width: 190px; }
+						}					
+						@media (max-width:767px){
+							font-size: 13px; height: 510px; width: 510px;
+							svg { height: 34%; margin-left: -17%; margin-top: -17%; width: 34%; }	
+							.logo {	margin-left: -50px; margin-top: -10px; width: 100px; }
+							.pin-wrap { height: 18px; width: 18px; }
+						}				
+						@media (max-width:540px){
+							font-size: 12px; height: 450px; line-height: 1.2; margin: -30px auto -80px; width: 450px;	
+							.logo {	margin-left: -40px; margin-top: -12px; width: 80px; }
+						}				
+						@media (max-width:480px){
+							height: 390px; width: 390px;
+						}				
+						@media (max-width:425px){
+							font-size: 10px; height: 340px; width: 340px;
+							.logo {	margin-left: -25px; margin-top: -8px; width: 50px; }
+						}		
+						@media (max-width:375px){
+							font-size: 9px; line-height: 1; height: 280px; margin: -20px auto -40px; width: 280px;
+						}		
+					}					
+				}				
+			}
+			&-7 { padding-bottom: 50px;	padding-top: 50px; text-align: center;
+				h2 { font-size: 30px; font-weight: normal; margin: 0; text-transform: capitalize; }	
+				h3 { font-size: 20px; font-weight: normal; margin: 0 0 30px; text-transform: lowercase;}		
+			}
+		}
+		
+		
+    }
+  }
+  input[name="tab-control"] {
+    @include tabs {
+      > label {
+        cursor: default;
+        color: $accent;
+        
+      }
+    }
+  }
+
+  @keyframes content {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  
+  @media (max-width: map-get($breakpoints, medium)) {
+    ul li label {
+      white-space: initial;
+      
+      br {
+        display: initial;
+      }
+      
+      svg {
+        height: 1.5em;
+      }
+    }
+  }
+  
+  @media (max-width: map-get($breakpoints, small)) {
+    ul li label {
+      padding: 5px;
+      
+      span {
+		  display: block;
+		  font-size: 12px;
+		  line-height: 1.4;
+      }
+    }
+    
+  }
+}

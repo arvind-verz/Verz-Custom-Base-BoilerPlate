@@ -1,0 +1,24 @@
+.thanks-wrap { background: url("../images/bg-thanks.jpg") no-repeat center center; background-size: cover; color: $white; 
+	h1 { font-family: "baskerville", Arial, sans-serif; font-size: 85px; font-weight: 700; line-height: 1; margin: 0; text-transform: capitalize;
+		@media (max-width:640px){
+			font-size: 60px; 
+		}
+		@media (max-width:480px){
+			font-size: 52px; 
+		}
+	}
+	h2 { font-family: "baskerville", Arial, sans-serif; font-size: 53px; font-weight: 700; margin: 0 0 20px; text-transform: lowercase;
+		@media (max-width:640px){
+			font-size: 40px;
+		}
+		@media (max-width:480px){
+			font-size: 32px; 
+		}
+	}
+	p { margin: 20px 0 0; }
+	.bcol { padding-bottom: 30px; }
+	@media (max-width:767px){
+		text-align: center;
+	}
+}
+

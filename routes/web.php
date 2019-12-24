@@ -24,13 +24,11 @@ Route::get('/clear', function () {
 //     return $exitCode2;
 // });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'PagesFrontController@index');
+Route::get('/home', 'PagesFrontController@index');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
@@ -62,6 +60,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('pages/search', 'CMS\PagesController@search')->name('pages.search');
     Route::resource('pages', 'CMS\PagesController');
 
+	// USERS ACCOUNT
+	Route::get('users/search', 'CMS\UsersAccountController@search')->name('users.search');
+    Route::get('users', 'CMS\UsersAccountController@index')->name('users.index');
+	Route::get('users/destroy', 'CMS\UsersAccountController@destroy')->name('users.destroy');
+	Route::get('users/create', 'CMS\UsersAccountController@create')->name('users.create');
+	Route::get('users/edit', 'CMS\UsersAccountController@edit')->name('users.edit');
+
     // MENU
     Route::get('menu/search', 'CMS\MenuController@search')->name('menu.search');
     Route::resource('menu', 'CMS\MenuController');
@@ -79,4 +84,26 @@ Route::group(['prefix' => 'admin'], function () {
     // EMAIL TEMPLATE
     Route::get('email-template/search', 'CMS\EmailTemplateController@search')->name('email-template.search');
     Route::resource('email-template', 'CMS\EmailTemplateController');
+
+    // BANNER
+    Route::get('banner/search', 'CMS\BannerController@search')->name('banner.search');
+    Route::resource('banner', 'CMS\BannerController');
+
+    // SLIDER
+    Route::get('slider/search', 'CMS\SliderController@search')->name('slider.search');
+    Route::resource('slider', 'CMS\SliderController');
+
+    // USER ACCOUNT
+    Route::get('user-account/search', 'CMS\UserAccountController@search')->name('user-account.search');
+    Route::resource('user-account', 'CMS\UserAccountController');
+
+    // ROLES AND PERMISSION
+    Route::get('roles-and-permission/search', 'CMS\RolesPermissionController@search')->name('roles-and-permission.search');
+    Route::get('/access-not-allowed', 'CMS\RolesPermissionController@access_not_allowed')->name('access-not-allowed');
+    Route::resource('roles-and-permission', 'CMS\RolesPermissionController');
 });
+
+
+// **************************************** FRONTEND *******************************************************//
+
+Route::get('{slug}', 'PagesFrontController@pages');

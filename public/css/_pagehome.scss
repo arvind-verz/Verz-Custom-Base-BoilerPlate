@@ -1,0 +1,38 @@
+.intro-home {	
+	&-1, &-3 { background: #F4F4F4; padding: 50px 0; }
+	&-1 { 
+		.note-wrap { color: $black; font-size: 18px; margin-top: 30px; text-align: center;
+			p, .btn-1 { display: inline-block; margin: 10px; vertical-align: middle; }
+		}
+		
+	}
+	&-2 { padding-bottom: 50px; padding-top: 50px; }
+	&-3 {  text-align: center;
+		p { margin: 15px 0; }
+		.intro { margin: 0 auto 20px; max-width: 800px;
+			.title-1 { margin-bottom: 20px; }
+		}
+		.bcol { margin-top: 30px; position: relative;
+			&:before { background: url("../images/tempt/ico-arrow-right.png") no-repeat center center; content: ""; height: 34px; left: -20px; position: absolute; top: 160px; width: 46px;				
+				@media (max-width:1199px){
+					top: 40px;
+				}			
+				@media (max-width:767px){
+					background-image: url("../images/tempt/ico-arrow-down.png"); height: 46px; left: 50%; margin-left: -17px; width: 34px; top: -80px;
+				}
+			}
+			&:first-child:before { display: none; }		
+			@media (max-width:767px){
+				margin-top: 100px;
+				&:first-child { margin-top: 30px; }	
+			}
+		}
+		figure { /*border: $white solid 5px;*/ border-radius: 100%; display: flex; align-items: center; height: 100px; margin: 0 auto; justify-content: center; width: 100px; @include transition;
+			/*&:hover { background: $white; -webkit-transform: scale(1.1); -moz-transform: scale(1.1); -o-transform: scale(1.1); -ms-transform: scale(1.1); transform: scale(1.1); }*/
+			span { display: inline-block; }
+		}
+		h3 { color: $black; font-size: 18px; font-weight: 500; margin: 25px 0; text-transform: uppercase; }
+		.btn-1 { margin-top: 30px; }
+	}
+}
+

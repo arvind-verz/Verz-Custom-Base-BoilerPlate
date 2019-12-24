@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 
-@section('content')ain Content -->
+@section('content')
 <div class="main-content">
     <section class="section">
         <div class="section-header">

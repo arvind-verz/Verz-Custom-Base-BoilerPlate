@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="title">Title</label>
-                                    <input type="text" name="title" class="form-control" id="" value="{{ $page->title }}">
+                                    <input type="text" name="title" class="form-control" id="" value="{{ old('title', $page->title) }}">
                                     @if ($errors->has('title'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="slug">Slug</label>
-                                    <input type="text" name="slug" class="form-control" id="" value="{{ $page->slug }}" >
+                                    <input type="text" name="slug" class="form-control" id="" value="{{ old('slug', $page->slug) }}" >
                                     @if ($errors->has('slug'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('slug') }}</strong>
@@ -43,7 +43,7 @@
                                     <select name="parent" class="form-control" id="" style="font-family: 'FontAwesome', 'Helvetica';">
                                         <option value="">-- Select --</option>
                                         <option value="0" @if($page->parent==0) selected @endif>-- Root --</option>
-                                        {!! getDropdownPageList($pages, $page->parent, $parent_id = 0) !!}
+                                        {!! getDropdownPageList($pages, old('parent', $page->parent), $parent_id = 0) !!}
                                     </select>
                                     @if ($errors->has('parent'))
                                     <span class="text-danger d-block">
@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="content">Content</label>
                                     <textarea name="content" class="form-control my-editor" id="" cols="30"
-                                        rows="10">{!! $page->content !!}</textarea>
+                                        rows="10">{!! old('content', $page->content) !!}</textarea>
                                         @if ($errors->has('content'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('content') }}</strong>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="view_order">View Order</label>
-                                    <input type="number" name="view_order" class="form-control" id="" value="{{ $page->view_order }}" min="0">
+                                    <input type="number" name="view_order" class="form-control" id="" value="{{ old('view_order', $page->view_order) }}" min="0">
                                     @if ($errors->has('view_order'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('view_order') }}</strong>
@@ -74,7 +74,7 @@
                                     <div class="section-title">New Tab</div>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="new_tab" class="custom-control-input" id="customCheck1"
-                                            value="1" @if($page->new_tab==1) checked @endif>
+                                            value="1" @if(old('new_tab', $page->new_tab)==1) checked @endif>
                                         <label class="custom-control-label" for="customCheck1">New Tab</label>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                         <option value="">-- Select --</option>
                                         @if(getActiveStatus())
                                         @foreach (getActiveStatus() as $key => $item)
-                                        <option value="{{ $key }}" @if($page->status==$key) selected @elseif($key==1) selected
+                                        <option value="{{ $key }}" @if(old('status', $page->status)==$key) selected @elseif($key==1) selected
                                             @endif>{{ $item }}
                                         </option>
                                         @endforeach

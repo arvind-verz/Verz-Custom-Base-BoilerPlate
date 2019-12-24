@@ -15,19 +15,38 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('admin.profile.update') }}" method="post">
+                            <form action="{{ route('admin.profile.update') }}" enctype="multipart/form-data"
+                                method="post">
                                 @csrf
                                 @method('POST')
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" name="name" class="form-control" id=""
-                                            value="{{ $admin->name }}">
-                                        @if ($errors->has('name'))
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" name="firstname" class="form-control" id=""
+                                            value="{{ $admin->firstname }}">
+                                        @if ($errors->has('firstname'))
                                         <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('firstname') }}</strong>
                                         </span>
                                         @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" name="lastname" class="form-control" id=""
+                                            value="{{ $admin->lastname }}">
+                                        @if ($errors->has('lastname'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('lastname') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Profile</label>
+                                        <input name="profile" type="file" class="form-control" id="" placeholder="">
+                                        @if($admin->profile) <br />
+                                        <img src="{{ asset($admin->profile) }}" class="img-responsive" width="100px" />
+                                        @endif
+                                        <p class="help-block"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>

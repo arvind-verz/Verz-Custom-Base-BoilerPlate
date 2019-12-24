@@ -18,6 +18,8 @@ class EmailTemplateController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.EMAIL_TEMPLATE');
         $this->module = 'EMAIL_TEMPLATE';
+        $this->middleware('grant.permission:'.$this->module);
+        $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);
@@ -31,7 +33,7 @@ class EmailTemplateController extends Controller
     public function index()
     {
         $title = $this->title;
-        $email_template = EmailTemplate::orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $email_template = EmailTemplate::orderBy('view_order', 'asc')->paginate($this->pagination);
 
         return view('admin.cms.email_template.index', compact('title', 'email_template'));
     }
@@ -143,7 +145,7 @@ class EmailTemplateController extends Controller
         $id = explode(',', $request->multiple_delete);
         EmailTemplate::destroy($id);
 
-        return redirect(url(url()->previous()))->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
 
     public function search(Request $request)

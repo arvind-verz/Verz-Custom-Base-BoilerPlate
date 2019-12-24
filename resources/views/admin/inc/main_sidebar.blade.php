@@ -24,9 +24,34 @@
                     'url'   =>  'admin/menu',
                 ],
                 [
+                    'title' =>  __('constant.BANNER'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/banner',
+                ],
+                [
+                    'title' =>  __('constant.SLIDER'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/slider',
+                ],
+                [
                     'title' =>  __('constant.EMAIL_TEMPLATE'),
                     'icon'  =>  '<i class="fas fa-envelope"></i>',
                     'url'   =>  'admin/email-template',
+                ],
+            ],
+        ],
+        [
+            'menu_header'   =>  __('constant.ROLES_AND_PERMISSION'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.USER_ACCOUNT'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/user-account',
+                ],
+                [
+                    'title' =>  __('constant.ROLES_AND_PERMISSION'),
+                    'icon'  =>  '<i class="fas fa-key"></i>',
+                    'url'   =>  'admin/roles-and-permission',
                 ],
             ],
         ],

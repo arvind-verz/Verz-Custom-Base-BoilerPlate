@@ -32,13 +32,45 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name'  =>  'required',
+            'firstname'  =>  'required',
+            'lastname'  =>  'required',
             'email' =>  'required|email',
             'password'  =>  'nullable|required_with:old_password|confirmed|min:8',
         ]);
 
         $admin = Admin::findorfail($this->user->id);
-        $admin->name = $request->name;
+		if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }
+
+        if (!is_dir('uploads/profile')) {
+            mkdir('uploads/profile');
+        }
+        $destinationPath = 'uploads/profile'; // upload path
+        $profile_image = '';
+        $profilePath = null;
+        if ($request->hasFile('profile')) {
+       // dd($request);
+            // Get filename with the extension
+            $filenameWithExt = $request->file('profile')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('profile')->getClientOriginalExtension();
+            // Filename to store
+            $profile_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('profile')->move($destinationPath, $profile_image);
+        }
+        if ($request->hasFile('profile')) {
+            if ($admin->profile) {
+                File::delete($admin->profile);
+            }
+            $profilePath = $destinationPath . '/' . $profile_image;
+            $admin->profile = $profilePath;
+        }
+        $admin->firstname = $request->firstname;
+        $admin->lastname = $request->lastname;
         $admin->email = $request->email;
         if($request->old_password)
         {

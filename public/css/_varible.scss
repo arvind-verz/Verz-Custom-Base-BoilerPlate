@@ -1,0 +1,9 @@
+$black: #141414;
+$blue: #2A97DB;
+$green: #0EA104;
+$white: #fff;
+$orange: #F68121;
+$red: #980027;
+@mixin transition {-webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease; }
+@mixin flexwrap { display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; }
+@mixin resetolul { list-style: none; padding: 0; }

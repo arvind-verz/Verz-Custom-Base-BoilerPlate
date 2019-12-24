@@ -19,7 +19,12 @@ class RedirectIfNotAdmin
 	{
 	    if (!Auth::guard($guard)->check()) {
 	        return redirect('admin/login');
-	    }
+        }
+        elseif(Auth::user()->status == 2)
+        {
+            Auth::logout();
+            return redirect('admin/login')->with('error', 'Account is inactive, please contact administrator');
+        }
 
 	    return $next($request);
 	}

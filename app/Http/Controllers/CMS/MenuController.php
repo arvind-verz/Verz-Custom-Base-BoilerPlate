@@ -18,6 +18,8 @@ class MenuController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.MENU');
         $this->module = 'MENU';
+        $this->middleware('grant.permission:'.$this->module);
+        $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);
@@ -32,7 +34,7 @@ class MenuController extends Controller
     public function index()
     {
         $title = $this->title;
-        $menu = Menu::orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $menu = Menu::orderBy('view_order', 'asc')->paginate($this->pagination);
 
         return view('admin.cms.menu.index', compact('title', 'menu'));
     }
@@ -136,7 +138,7 @@ class MenuController extends Controller
         $id = explode(',', $request->multiple_delete);
         Menu::destroy($id);
 
-        return redirect(url(url()->previous()))->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
 
     public function search(Request $request)
@@ -144,7 +146,7 @@ class MenuController extends Controller
         $title = $this->title;
         $secondary_title = "Search";
         $search = $request->search;
-        $menu = Menu::search($search)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $menu = Menu::search($search)->orderBy('view_order', 'asc')->paginate($this->pagination);
 
         return view('admin.cms.menu.index', compact('title', 'secondary_title', 'menu'));
     }

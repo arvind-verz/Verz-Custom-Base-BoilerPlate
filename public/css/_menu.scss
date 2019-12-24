@@ -1,0 +1,80 @@
+.menu { float: right; font-size: 0; margin-top: 43px; margin-right: 30px; text-align: right; text-transform: capitalize; 
+	.btn-links { float: none; margin: 0; padding: 15px 20px; }
+	> ul { display: inline-block; font-size: 0; margin: 0; @include resetolul;
+		> li { display: inline-block; font-size: 16px; margin-left: 30px; position: relative; 
+			@media (max-width:1439px){
+				font-size: 14px; margin-left: 22px;
+			}
+			> a { color: $black !important; display: inline-block; vertical-align: top; /*height: 40px; line-height: 38px;*/ position: relative; 
+				&:hover { color: $red !important; }
+				&.hasSub { padding-right: 20px;
+					&:before { content: "\f107";font-family: 'Font Awesome 5 Free'; font-weight: 900; font-size: 15px; position: absolute; right: 0; top: 3px; }
+					@media (max-width:991px) {
+						&.hasSub { padding-right: 30px; 
+							&:before { right: 15px; top: 16px; }
+							&.open {
+								&:before { content: "\f106"; }		
+							}
+						}
+					}
+				}
+				.subarrow { display: none;
+					@media (max-width:991px) {
+						bottom: 0; display: block; left: 0; position: absolute; right: 0; top: 0; z-index: 999;
+					}
+				}				
+			}	
+			&.active > a { color: $red !important; }
+			 > ul { height: 0; min-width: 100%; margin: 0; overflow: hidden; @include resetolul; padding-top: 5px; text-align: left; 
+				@media (min-width:992px){
+					position: absolute; left: 0; top: 100%; 
+				}
+				 a {
+					 background: $white; color: #4E4E4E !important; display: block; font-size: 15px; padding: 10px 20px; white-space: nowrap;
+					 &:hover { background: #EDEDED; color: $white !important; }
+				 }
+				 li {					 
+					 &:first-child a { border-radius: 5px 5px 0 0; }
+					 &:last-child a { border-radius: 0 0 5px 5px; }
+				 }
+				 .active a { background: #EDEDED; }
+			}
+			@media (min-width:992px){
+				&:hover {
+					> ul { height: auto; overflow: visible; }
+				}
+			}
+		}
+	}
+	@media (max-width:1199px){
+		background: $red; bottom: 0; margin: 0; position: fixed; right: -250px; text-align: left; top: 0; width: 230px; z-index: 9999; @include transition; margin-right: 0;
+		&.open-sub { right: 0; }
+		> ul { display: block;
+			li { display: block; margin-left: 0;
+				a { border-bottom: #6f031f dotted 1px; color: $white !important; display: block; height: auto; line-height: 1.4; padding: 15px 20px;
+					&:hover { background: #6f031f; }
+					.hover { padding-bottom: 0; }
+				}
+				&.active a { background: #6f031f; color: $white !important; }
+			}
+			ul.open { height: auto; padding-top: 0;
+				li {
+					a { background: none; color: $white !important; padding-left: 40px; }
+				}
+			}
+		}
+		.btn-lnk { display: block; margin: 20px 30px; }
+	}
+}
+@media (max-width:1199px){
+	.btn-menu{ color: #490d67 !important; display: block; height: 18px; font-size: 0; line-height: 1; margin-top: -9px; position: absolute; top: 50%; right: 15px; text-transform: uppercase; width: 24px; vertical-align: middle; z-index: 5;
+		span { background: $red; height:3px;margin-bottom:5px;display:block;position:relative}
+		&.active-burger { background: rgba(0,0,0,.8); bottom: 0; height: auto; left: 0; position: fixed; top: 0; right: 0; width: auto;
+			span { display: none; }
+		}
+	}
+	.burger-icon-2{transition:opacity .1s ease;-webkit-transition:opacity .1s ease;-moz-transition:opacity .1s ease;-ms-transition:opacity .1s ease;-o-transition:opacity .1s ease}
+	.burger-icon-1,.burger-icon-3{ display: block; transition:transform .2s ease;-webkit-transition:-webkit-transform .2s ease;-moz-transition:-moz-transform .2s ease;-ms-transition:-ms-transform .2s ease;-o-transition:-o-transform .2s ease}
+	.btn-close { background: rgba(0,0,0,.8); display: block; font-size: 0; height: 100%; opacity: 0; position: fixed; right: 0; top: 0; width: 0; @include transition; }
+	.open-page .btn-close { opacity: 1; width: 100%; }
+}

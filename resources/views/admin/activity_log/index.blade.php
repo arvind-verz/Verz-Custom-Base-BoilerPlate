@@ -44,7 +44,7 @@
                                         <tr>
                                             <td row="scope">{{ $item->acid }}</td>
                                             <td>{{ $subject_type[1] }}</td>
-                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->firstname . ' ' . $item->lastname }}</td>
                                             <td>{{ date('d M, Y h:i A', strtotime($item->activity_log_updated)) }}
                                             </td>
                                             <td>

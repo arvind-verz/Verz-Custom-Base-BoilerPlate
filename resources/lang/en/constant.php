@@ -13,6 +13,10 @@ return [
     'SYSTEM_SETTING'    =>  'System Setting',
     'EMAIL_TEMPLATE'    =>  'Email Template',
     'PROFILE'   =>  'Profile',
+    'ROLES_AND_PERMISSION'  =>  'Roles and Permission',
+    'BANNER'    =>  'Banner',
+    'SLIDER'   =>  'Slider',
+    'USER_ACCOUNT'  =>  'User Account',
 
 
 

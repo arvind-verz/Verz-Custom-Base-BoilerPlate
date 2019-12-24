@@ -69,4 +69,14 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+	
+	public function showRegistrationForm()
+    {
+        $slug = __('constant.LOGIN');
+        /*$menu = Menu::where('status', 1)->orderBy('view_order', 'asc')->get();
+        $banner = Banner::where('status', 1)->orderBy('order_by', 'asc')->get();
+        $page = Page::where('slug', $slug)->where('status', 1)->first();*/
+        return view('auth.register');
+    }
+	
 }

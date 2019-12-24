@@ -16,6 +16,7 @@ class SystemSettingsController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.SYSTEM_SETTING');
         $this->module = 'SYSTEM_SETTING';
+        $this->middleware('grant.permission:'.$this->module);
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);

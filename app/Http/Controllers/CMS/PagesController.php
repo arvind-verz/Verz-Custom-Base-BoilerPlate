@@ -18,6 +18,8 @@ class PagesController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.PAGES');
         $this->module = 'PAGES';
+        $this->middleware('grant.permission:'.$this->module);
+        $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);
@@ -128,6 +130,7 @@ class PagesController extends Controller
 
         $pages = Page::findorfail($id);
         $pages->title = $request->title;
+        $pages->slug = $request->slug;
         $pages->parent = $request->parent;
         $pages->content = $request->content;
         $pages->view_order = $request->view_order;

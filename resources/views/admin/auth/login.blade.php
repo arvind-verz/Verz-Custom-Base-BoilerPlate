@@ -13,6 +13,7 @@
                     </div>
 
                     <div class="card-body">
+                        @include('admin.inc.messages')
                         <form class="form-horizontal" method="POST" action="{{ route('admin_login') }}">
                             {{ csrf_field() }}
                             <div class="form-group">

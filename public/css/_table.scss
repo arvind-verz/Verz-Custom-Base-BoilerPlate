@@ -1,0 +1,20 @@
+.tb-1 { margin-top: 20px;
+	table { width: 100%;
+		th { padding: 15px 20px; }
+		td { padding: 20px; }
+		th { background: $red; color: $white; font-weight: 500; line-height: 1.4; }
+		ul { margin: 0; }
+	}
+	&.type-1 {
+		tr:nth-child(odd) {
+			td:nth-child(odd) { background: #F5F5F5; }
+		}		
+		tr:nth-child(even) {
+			td:nth-child(even) { background: #F5F5F5; }
+		}
+	}
+	&.type-2 { color: $black;
+		tr:nth-child(even) td { background: #F5F5F5;	}		
+	}
+		
+} 

@@ -14,18 +14,28 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('admin_register')}}">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input id="name" type="text" class="form-control" name="name" tabindex="1"  >
-                                @if ($errors->has('name'))
+                                <label for="firstname">First Name</label>
+                                <input id="firstname" type="text" class="form-control" name="firstname" tabindex="1"  >
+                                @if ($errors->has('firstname'))
                                 <span class="text-danger d-block">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                    <strong>{{ $errors->first('firstname') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastname">Last Name</label>
+                                <input id="lastname" type="text" class="form-control" name="lastname" tabindex="2"  >
+                                @if ($errors->has('lastname'))
+                                <span class="text-danger d-block">
+                                    <strong>{{ $errors->first('lastname') }}</strong>
                                 </span>
                                 @endif
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input id="email" type="email" class="form-control" name="email" tabindex="2"  >
+                                <input id="email" type="email" class="form-control" name="email" tabindex="3"  >
                                 @if ($errors->has('email'))
                                 <span class="text-danger d-block">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -35,7 +45,7 @@
 
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" tabindex="3"  >
+                                <input id="password" type="password" class="form-control" name="password" tabindex="4"  >
                                 @if ($errors->has('password'))
                                 <span class="text-danger d-block">
                                     <strong>{{ $errors->first('password') }}</strong>
@@ -45,7 +55,7 @@
 
                             <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
-                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" tabindex="4"  >
+                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" tabindex="5"  >
                                 @if ($errors->has('password_confirmation'))
                                 <span class="text-danger d-block">
                                     <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -54,7 +64,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="6">
                                     Register
                                 </button>
                             </div>

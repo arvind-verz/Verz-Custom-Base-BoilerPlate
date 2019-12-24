@@ -1,0 +1,19 @@
+.contact-wrap { padding-bottom: 80px; padding-top: 80px;
+	@media (max-width:991px){
+		padding-bottom: 50px; padding-top: 50px;
+	}	
+	iframe { width: 100% !important; }
+	h4 { color: #141414; font-size: 16px; font-weight: 700; margin: 20px 0 10px; }	
+	hr { margin: 25px 0; }
+	.title-1 { margin: 0 0 20px; }
+	.info { padding-right: 50px;
+		@media (max-width:991px){
+			margin-bottom: 50px; padding-right: 0;
+		}	
+	}
+	.fas { margin: 5px 0; padding-left: 30px; position: relative;
+		&:before { color: $red; font-size: 14px; left: 0; position: absolute; top: 4px; }
+	}	
+} 
+
+

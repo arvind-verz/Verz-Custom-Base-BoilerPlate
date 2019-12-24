@@ -47,6 +47,7 @@ return array(
     'Spatie\\String\\' => array($vendorDir . '/spatie/string/src'),
     'Spatie\\Sitemap\\' => array($vendorDir . '/spatie/laravel-sitemap/src'),
     'Spatie\\Robots\\' => array($vendorDir . '/spatie/robots-txt/src'),
+    'Spatie\\Permission\\' => array($vendorDir . '/spatie/laravel-permission/src'),
     'Spatie\\PdfToImage\\' => array($vendorDir . '/spatie/pdf-to-image/src'),
     'Spatie\\MediaLibrary\\' => array($vendorDir . '/spatie/laravel-medialibrary/src'),
     'Spatie\\Image\\' => array($vendorDir . '/spatie/image/src'),

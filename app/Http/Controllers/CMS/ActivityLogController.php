@@ -15,6 +15,9 @@ class ActivityLogController extends Controller
     {
         $this->middleware('auth:admin');
         $this->title = __('constant.ACTIVITYLOG');
+        $this->module = 'ACTIVITYLOG';
+        $this->middleware('grant.permission:'.$this->module);
+        $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);
@@ -24,7 +27,7 @@ class ActivityLogController extends Controller
     public function index()
     {
         $title = $this->title;
-        $activity_log = ActivityLog::join('admins', 'activity_log.causer_id', '=', 'admins.id')->select('activity_log.updated_at as activity_log_updated', 'activity_log.id as acid', 'admins.id as aid', 'activity_log.*', 'admins.*')->paginate($this->systemSetting()->pagination);
+        $activity_log = ActivityLog::join('admins', 'activity_log.causer_id', '=', 'admins.id')->orderBy('activity_log.created_at', 'desc')->select('activity_log.updated_at as activity_log_updated', 'activity_log.id as acid', 'admins.id as aid', 'activity_log.*', 'admins.*')->paginate($this->pagination);
 
         return view('admin.activity_log.index', compact('title', 'activity_log'));
     }
